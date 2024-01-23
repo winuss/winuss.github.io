@@ -1,8 +1,8 @@
 ---
-title: "Emotion 🤔 Styled-Component"
+title: "Emotion VS Styled-Component"
 description:
-date: 2023-12-22
-update: 2023-12-22
+date: 2022-12-22
+update: 2022-12-22
 tags:
   - emotion
   - styled-component
