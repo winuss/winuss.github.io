@@ -214,6 +214,12 @@ https://stackblitz.com/edit/stackblitz-starters-eosa5k?embed=1
 
 개인적으로 Emotion의 css() 함수가 좀 더 사용하기가 편한 것 같습니다. MUI(Material UI)가 스타일링 엔진을 Styled Components 대신에 Emotion을 채택하면서 Emotion 쪽으로 살짝 힘이 실리는것 같기도 하지만, 프로젝트의 성격 및 구성원의 성향에 따라 선택적으로 사용하면 될 것 같습니다.
 
+개발용이성이 워낙 커서 React의 인기와 함께 유행하긴했지만, CSR 환경을 바탕으로 두고 구상한 방법이었기 때문에 SSR 환경에서 문제가 나타났습니다.
+
+Next.js 공식 문서를 보면 tailwind를 적극 추천하고 있습니다. 아무래도 SSR 환경에서 불안정한 CSS-in-JS 방식을 제외하고 남는 CSS 솔루션 중에서 Tailwind CSS가 가장 CSS의 단점을 잘 커버할 수 있었기 때문에 추천되고 있는 것 같다.
+
+그냥 tailwind css를 사용하는걸로...
+
 **참고**
 
 - Emotion 공식문서 (https://emotion.sh/docs/introduction)
