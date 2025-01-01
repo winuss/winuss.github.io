@@ -1,0 +1,89 @@
+---
+title: ES6 - Spread Operator
+date: 2018-06-17
+desc: ES6 Tip
+thumbnail: /posts/javascript/ecma-script06-04/cover.png
+---
+
+### Spread Operator!의 기본 
+
+**전개 연산자 or 펼침 연산자** 많이 쓰게 될 연산자이다.
+
+> 전개 연산자(spread operator)는 표현식(expression)은 2개 이상의 인수arguments(함수 호출 용)나 2개 이상의 요소elements(배열 리터럴 용) 또는 2개 이상의 변수(비구조화 할당 용)가 예상되는 곳에 확장될 수 있도록 한다.
+
+### 함수에 인자로 전달
+~~~javascript
+//배열을 요소 하나씩 받아야하는 함수가 있다.
+function printLog(x, y, z) {
+    console.log(x,y,z);
+}
+const hopeArray = ["게임", "사서", "하고싶다."];
+
+
+printLog.apply(null, hopeArray);
+// 이런 방식으로 하거나
+printLog(hopeArray[0], hopeArray[1], hopeArray[2]);
+// 아니면 printLog 함수를 수정해야했다.
+
+//ECMA06에서는 
+printLog(...hopeArray);
+//이렇게 간단하게 사용하면 된다.
+
+
+//응용
+let numbers = [2, 5, 6, 1, 0];
+Math.min(...numbers);
+~~~
+> `...`을 통해서 apply없이 함수를 호출할 수 있다!
+
+### 배열 붙이기
+
+~~~javascript
+let beer = ['시원한 맥주', '마시러'];
+let offWork = ['퇴근하고', ...beer, '가고싶다.'];
+let merge = [...beer, ...offWork]; //이런 방법도 가능
+
+// 뒤나 앞에 붙이고 싶다면?
+arr1.push(...arr2);
+arr1.unshift(...arr2);
+~~~
+>그냥 `...`으로 배열을 껍데기를 깐다고 생각하면 쉽다.
+
+
+### 배열 복사하기
+
+~~~javascript
+let arr1 = [1,2,3];
+let arr2 = [...arr1];
+let arr3 = arr1.slice(0);
+
+arr1.unshift("1번");
+arr2.unshift("2번");
+arr3.unshift("3번");
+
+// "1 " ["1번", 1, 2, 3]
+// "2 " ["2번", 1, 2, 3]
+// "3 " ["3번", 1, 2, 3]
+~~~
+>참고해야하는 것은 배열 속 객체는 얕은 복사를 한것이다. 객체의 깊은 복사는 스니핏이 따로 있다.
+
+### NodeList를 배열로 변환
+
+~~~javascript
+let nodeList = document.querySelectorAll("li");
+// "[object NodeList]"
+
+// 변환할 변수에 대입.
+let convertedSpread = [...nodeList];  
+// "[object Array]"
+
+//함수에 인자로 넣어줄 때.
+const testFunction = function(...list) {
+};
+// "[object Array]"
+
+//from()을 이용한 노드리스트를 배열로 변경.
+let convertedFrom = Array.from(nodeList);
+// "[object Array]"
+~~~
+>`node list`를 추출하였을 때, 배열로 바꿔야 할 때가 은근 자주있다. 물론 `from()`을 통해 하는 방법도 있지만 보기도 편하고 함수에 직접 때려 박을땐, 이 방법이 가장 깔끔하다.

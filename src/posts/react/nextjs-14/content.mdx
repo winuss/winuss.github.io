@@ -1,0 +1,148 @@
+---
+title: 🤜 Next.js 14 Conf
+date: 2023-12-21
+desc: Next.js
+thumbnail: /posts/fe/nextjs-14/cover.png
+---
+
+Next.js의 최신 버전, Next.js 14의 출시는 프론트엔드 개발의 세계에 새로운 변화의 바람을 불러일으키고 있습니다. 이 업데이트는 개발 속도와 사용자 경험을 극적으로 개선하는 몇 가지 중요한 기능을 제공합니다. 이 글에서는 Next.js 14의 핵심 기능과 그것들이 웹 앱 개발에 어떤 영향을 미칠지에 대해 이야기 해보겠습니다.
+
+## Next.js 14의 혁신: 빠르고 효율적인 개발 경험
+
+Next.js는 웹 앱 개발을 위한 최고의 프레임워크 중 하나로 자리 잡았으며, Next.js 14는 이러한 위치를 더욱 공고히 합니다. 이 버전에서는 특히 세 가지 주요 기능이 눈에 띕니다.
+
+1. Turbopack: 속도와 효율성의 새로운 기준
+   Turbopack은 로컬 서버 시작 시간을 최대 53%까지 단축하고, 코드 업데이트 시간을 94%나 줄여줍니다. 이것은 대규모 애플리케이션에 대한 실제 벤치마크 결과로, Next.js의 성능 향상을 명확히 보여줍니다.
+
+2. Server Actions: 간결하고 효율적인 백엔드 통합
+   Server Actions는 백엔드 엔드포인트 구축을 간소화하고, 사용자 경험을 향상시킵니다. 이를 통해 개발자는 API 경로를 수동으로 생성할 필요 없이, React 컴포넌트 내에서 직접 서버에서 실행되는 함수를 정의할 수 있습니다.
+
+3. 부분적 Pre-rendering: 빠른 초기 응답과 동적 콘텐츠
+   Next.js의 새로운 부분적 pre-rendering 기능은 초기 정적 응답과 동적 콘텐츠 스트리밍을 조화롭게 결합합니다. 이는 사용자에게 더 빠른 페이지 로딩 경험을 제공하면서 동시에 동적인 콘텐츠를 유연하게 제공합니다.
+
+```
+npx create-next-app@latest
+```
+
+## 개발의 편의성: 더 쉬워진 Next.js 개발 경험
+
+Next.js 14는 개발자들이 보다 빠르고 효율적으로 작업할 수 있도록 설계되었습니다. 이러한 편의성은 다음과 같은 형태로 나타납니다:
+
+- 통합된 캐싱 및 재검증: 데이터의 유효성을 빠르게 확인하고 캐시된 콘텐츠를 최신 상태로 유지합니다.
+- 간단한 함수 호출: 서버 작업을 위한 복잡한 설정 없이 간단한 함수 호출로 백엔드 기능을 사용할 수 있습니다.
+- 보다 효율적인 코드 작성: 개발자들은 코드 작성 시간을 줄이고, 더 직관적인 방식으로 애플리케이션을 구성할 수 있습니다.
+
+## Server Action: 프론트엔드와 백엔드의 간편한 통합
+
+Server Action은 백엔드 기능을 프론트엔드 컴포넌트에 직접 통합함으로써 개발자들이 더욱 직관적으로 작업할 수 있도록 해줍니다. 이 기능은 Next.js가 React Canary 채널의 안정성을 기반으로 하여 새로운 기능을 채택하는 방식을 반영합니다.
+
+```typescript
+export default function Page() {
+  async function create(formData: FormData) {
+    "use server"
+    const id = await createItem(formData)
+  }
+
+  return (
+    <form action={create}>
+      <input type="text" name="name" />
+      <button type="submit">Submit</button>
+    </form>
+  )
+}
+```
+
+양식 제출 시 서버에서 실행되는 processFormData 함수를 직접 호출합니다. 이는 기존의 복잡한 API 경로 설정 없이 서버 로직을 구현할 수 있도록 해주는 혁신적인 방식입니다.
+
+### Server Action의 장점
+
+- 간결성: React 컴포넌트 내에서 서버 작업을 직접 정의함으로써 코드를 간결하게 유지할 수 있습니다.
+- 타입 안전성: TypeScript를 사용하여 클라이언트와 서버 간 완벽한 타입 안전성을 보장합니다.
+- 효율적인 데이터 처리: 단일 네트워크 왕복으로 데이터 변경, 페이지 리렌더링 또는 리다이렉션을 처리할 수 있습니다.
+- 재사용성: 다양한 작업을 구성하고 재사용할 수 있어 개발 과정을 효율적으로 만듭니다.
+
+Server Action은 백엔드 개발 경험이 있는 개발자들에게 친숙하면서도, 웹의 기본 사항인 Form과 FormData Web API를 기반으로 새로운 접근 방식을 제공합니다. 이러한 방식은 개발자들이 Next.js를 사용하여 보다 신속하고 효과적으로 프로젝트를 진행할 수 있게 도와줍니다.
+
+## 부분적 Pre-rendering
+
+Next.js를 위해 작업 중인 부분 pre-rendering(빠른 초기 정적 응답을 갖춘 동적 콘텐츠에 대한 컴파일러 최적화)의 미리 보기를 제공하고,
+pre-rendering은 서버측 렌더링(SSR), 정적 사이트 생성(SSG) 및 증분적 정적 재검증(ISR)에 대한 10년 간의 연구 개발을 기반으로 구축되었습니다.
+
+## React Suspense를 기반으로 구축
+
+부분 사전 렌더링은 Suspense 경계에 따라 정의됩니다.
+
+```typescript
+export default function Page() {
+  return (
+    <main>
+      <header>
+        <h1>My Store</h1>
+        <Suspense fallback={<CartSkeleton />}>
+          <ShoppingCart />
+        </Suspense>
+      </header>
+      <Banner />
+      <Suspense fallback={<ProductListSkeleton />}>
+        <Recommendations />
+      </Suspense>
+      <NewProducts />
+    </main>
+  )
+}
+```
+
+pre-rendering이 활성화되면 이 페이지는 `<Suspense />` boundary를 기반으로 정적 셸을 생성합니다. React Suspense의 `fallback`은 사전 렌더링됩니다.
+
+그런 다음 셸의 Suspense fallback은 cookie를 읽어 카트를 결정하거나 사용자를 기반으로 배너를 표시하는 등의 동적 컴포넌트로 대체됩니다.
+
+요청이 이루어지면 정적 HTML 셸이 즉시 제공됩니다.
+
+```html
+<main>
+  <header>
+    <h1>My Store</h1>
+    <div class="cart-skeleton">
+      <!-- Hole -->
+    </div>
+  </header>
+  <div class="banner" />
+  <div class="product-list-skeleton">
+    <!-- Hole -->
+  </div>
+  <section class="new-products" />
+</main>
+```
+
+`<ShoppingCart />`는 쿠키에서 읽어 사용자 session을 확인하므로 이 컴포넌트는 정적 셸과 동일한 HTTP 요청의 일부로 스트리밍됩니다. 추가 네트워크 왕복이 필요하지 않습니다.
+
+```typescript
+import { cookies } from 'next/headers'
+
+export default function ShoppingCart() {
+  const cookieStore = cookies()
+  const session = cookieStore.get('session')
+  return ...
+}
+```
+
+가장 세부적인 정적 셸을 가지려면 Suspense boundary를 추가해야 할 수도 있습니다. 그러나 현재 loading.js를 이미 사용하고 있다면 이는 암시적인 Suspense boundray이므로 정적 셸을 생성하는 데 변경이 필요하지 않습니다.
+
+## 메타데이터 개선
+
+뷰포트, 색 구성표 및 테마에 대한 중요한 페이지 콘텐츠를 서버에서 스트리밍하기 전에 먼저 브라우저에 전송해야 하는 메타데이터가 있습니다.
+
+이러한 `meta` 태그가 초기 페이지 콘텐츠와 함께 전송되도록 하면 원활한 사용자 경험에 도움이 되며, 테마 색상을 변경하거나 뷰포트 변경으로 인해 레이아웃이 이동하여 페이지가 깜박이는 것을 방지할 수 있습니다.
+
+Next.js 14에서는 blocking 및 non-blocking 메타데이터를 분리했습니다. 메타데이터 옵션의 작은 하위 집합(small subset)만 차단되며, 우리는 non-blocking 메타데이터가 부분적으로 pre-rendering된 페이지가 정적 셸을 제공하는 것을 방해하지 않도록 하고 싶습니다.
+
+다음 메타데이터 옵션은 이제 더 이상 사용되지 않으며 향후 주요 버전의 메타데이터에서 제거(deprecated)될 예정 이라고 합니다.
+
+- `viewport`: 뷰포트의 초기 확대/축소 및 기타 속성을 설정합니다.
+- `colorScheme`: 뷰포트의 지원 모드(밝음/어두움)를 설정합니다.
+- `themeColor`: 뷰포트 주변의 크롬이 렌더링해야 하는 색상을 설정합니다.
+  Next.js 14부터 이러한 옵션을 대체하는 새로운 옵션 [`viewport` 및 `generateViewport`](https://nextjs.org/docs/app/api-reference/functions/generate-viewport)가 있습니다. 다른 모든 `메타데이터` 옵션은 동일하게 유지됩니다.
+
+## 마치며
+
+turobopack과 pre-rendering 은 기대가 되는 부분이긴 하지만, ServerActions은 심플해 보이긴 하지만 이렇게 쓰면 코드가 지저분해 질것 같은데 이게 맞나 싶은 느낌이 들기도 하네요. 아무튼 프론트엔드의 변화 속도는 정말 빠른것 같다는 생각입니다.

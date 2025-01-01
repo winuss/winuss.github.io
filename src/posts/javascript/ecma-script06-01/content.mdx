@@ -1,0 +1,86 @@
+---
+title: ES6 - 변수 let, const 사용법
+date: 2018-05-06
+desc: ES6 Tip
+thumbnail: /posts/javascript/ecma-script06-01/cover.png
+---
+
+### ECMAScript는 뭐냐?
+ECMAscript6(ES6)라고도 불리고 ECMA2015라고도 불린다. 자바스크립트의 표준으로 새로운 JS 표준이다. 
+
+JS같은 경우 함수단위로 스코프가 결정된다든지 호이스팅, 동적 타입이라든지 언어 자체가 느슨한 편이다. JAVA나 C#같은 언어는 엄격한면이 있지만 js너무 느슨하여 혼란스러울때가 종종 생긴다.
+
+### 변수
+변수부터 알아보자 앞서서 스코프 이야기를 했는데, 스코프는 변수 범위다. 원래 JS에서는 `var`로 변수를 선언했다. 보통 `전역변수(global)`를 하지말라는 것을 많이 들어봤을 것이다.
+
+~~~javascript
+var x = 1;
+if (true) {
+    var x = 2;
+    console.log(x);  // 2
+}
+console.log(x);  // 2
+~~~
+>`var x = 1`에서 x는 전역변수가 되었다. 거기다가 `var`키워드는 범위가 유연성있다. if속에서 새로 만든 변수같지만 같은 변수로 인식한다.
+>간단한 예지만 실제로 이런 경우 때문에 원하는 값이 나오지 않아 고생을 많이한다.
+
+~~~javascript
+let x = 1;
+if (true) {
+    let x = 2;
+    console.log(x);  // 2
+}
+console.log(x);  // 1
+~~~
+
+### let, const
+`var`가 별로 좋지 않다는 것을 알았다. let과 const는 무슨 차이지?
+
+`let`은 여러번 할당 할 수 있다. `const`는 한번 뿐이다.
+~~~javascript
+let x = 1;
+x = 2;
+console.log(x);  // 2
+
+
+const y = 1;
+y = 2;
+console.log(y);  // "error"
+~~~
+>let은 한번 넣고 두번 넣고 할당을 여러번 할 수있지만 const는 그렇지 않다.
+
+**당장 어딘가에 let과 const를 사용하고 싶다면?**
+
+~~~javascript
+for (let i = 0; i < 3; i++) {
+    //do!!
+}
+
+const square = function calculatingSquareArea(a,b){
+    return a*b;
+};
+~~~
+
+>for-loop문에 var 대신 let을 써보자. for문 밖에서 i값에 접근하지 못한다.
+>함수를 선언할 때, var대신 const를 써보자 어짜피 함수할당은 1번만 하기 때문에 여러모로 좋다.
+
+**배열과 객체에도 `const`를 써도 좋다.**
+
+~~~javascript
+const car = {
+  wheels : 5,
+  windows : 6
+};
+car.engine = 1;
+car.wheels = 4;
+
+console.log(car);
+// {
+//   engine: 1,
+//   wheels: 4,
+//   windows: 6
+// }
+
+car = ''; // <-- Error
+~~~
+>에러가 나야할 것 같지만 `const`로 선언한 배열과 객체 자체를 변경하지 않으면 상관없다.

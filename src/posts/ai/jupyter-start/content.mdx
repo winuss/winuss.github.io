@@ -1,0 +1,243 @@
+---
+title: Jupyter Notebook 설치 및 셋팅
+date: 2019-02-14
+desc: Jupyter Notebook 설치 및 셋팅
+thumbnail: /posts/ai/jupyter-start/cover.png
+---
+
+머신러닝 관련 코드를 작성해보기 위해 환경을 세팅해보자. 다른 방법들도 많겠지만 가장 많이 쓰는 주피터 노트북을 설치하고 파이썬 패키지를 어떻게 관리할 것인지를 살펴보도록 하자.
+
+### 주피터 노트북
+
+주피터 노트북(jupyter notebook)은 웹 브라우저에서 파이썬 코드를 작성하고 실행까지 해볼 수 있는 REPL방식의 개발도구이다.
+머신러닝이나 데이터분석 용도로 파이썬을 사용하는 사람들이 사용하는 툴로써 가벼우며 코드를 실행하고 수정하기가 간편하다. 또한 notebook형태로 파일이 공유가 가능하다.
+> REPL(Read–Eval–Print Loop) :  명령어를 한줄씩 입력하며 실행 상황을 지켜보는 방식(대화형)
+
+먼저 **파이썬을 설치**하자. 파이썬이 이미 설치가 되어있다면 생략 하자.
+~~~bash
+$ sudo apt-get update                // apt-get 항목 업데이트
+$ sudo apt-cache search python3      // 패키지 검색
+$ sudo apt install python3.6         // 파이썬 3.6버전 설치
+$ python3 -V                         // 파이썬 버전 
+$ sudo apt install python3-pip       // 파이썬 패키지 관리
+~~~
+
+파이썬 pip를 설치한 후 `pip install jupyter` 로 주피터 노트북을 설치 할 수 있지만
+일반적으로 `아나콘다(Anaconda)`를 설치하면 `Jupyter Notebook`이 함께 설치되어 주피터를 사용할 수 있다. 물론 `pip`를 이용하면 원하는 패키지만 그떄 그때 설치하여 사용할 수는 있지만, 아나콘다를 설치하면 데이터 처리 및 분석에 필요한 패키지가 모두 포함되어 설치가 되기 때문에 약간 설치시간이 오래 걸리긴 하지만 아나콘다를 사용하는 것을 추천한다.
+
+### 아나콘다(Anaconda) 설치
+이 글에서는 Ubuntu18.04 기준으로 설명하도록 하겠다. 또한 최신버전을 위해 반드시 아나콘다 사이트에서 최신 URL을 확인하여 설치를 진행하길 바란다.
+~~~bash
+$ wget https://repo.continuum.io/archive/Anaconda3-5.1.0-Linux-x86_64.sh
+$ bash Anaconda3-5.1.0-Linux-x86_64.sh
+~~~
+>계속 엔터를 눌러 설치한다(bashrc등록 여부는 Y로 입력해준다 - 그렇지 않으면 수동설정)
+
+[아나콘다(Anaconda) 공식홈 참고](https://www.anaconda.com/downloads)
+
+**설치 확인**
+~~~bash
+$ source ~/.bashrc    // bashrc에 등록한것을 활성해 준다
+$ conda --version     // 버전확인
+$ conda update conda  // 아나콘다 업데이트
+~~~
+
+**만약 삭제하길 원한다면...**
+~~~bash
+$ rm -rf ~/anaconda3
+$ vi ~/.bashrc // # added by Anaconda3 installer 제거
+$ rm -rf ~/.condarc ~/.conda ~/.continuum
+~~~
+
+### 주피터 노트북 실행
+~~~bash
+$ jupyter notebook
+~~~
+![jupyter-run](/posts/ai/jupyter-start/jupyter-run.png)
+> 화면에 출력된 `http://localhost:8888/?token=***`으로 접속하면 된다.
+> (`jupyter notebook --generate-config` 명령으로 `jupyter_notebook_config.py` 파일을 생성하면 해당 파일에서 세부설정이 가능하다.)
+
+**접속화면**
+![jupyter](/posts/ai/jupyter-start/jupyter-1.png)
+우측 상단에 New > Python3를 선택하면 새로운 창이 생성된다.
+![jupyter](/posts/ai/jupyter-start/jupyter-2.png)
+이제 웹상에서 파이썬 코드를 작성하고 실행 할 수 있다.
+
+물론 matplotlib 패키지를 이용하여 가공된 데이터를 그래프로 표현 할 수 있다.
+![jupyter](/posts/ai/jupyter-start/jupyter-sample.png)
+
+주피터 노트북은 개인 로컬환경에 설치하여 직접 띄울수도 있지만, Microsoft에서는 azure notebook, Google에서는 Colab에서 클라우드상의 주피터환경을 제공해주고 있으니 간단한 학습용로라면 이를 활용하는 방법도 좋을 것이다. 공짜다!
+- [Microsoft Azure Notebooks](https://notebooks.azure.com/)
+- [Google Colab](https://colab.research.google.com/)
+
+(주피터 노트북 사용법에 대한 부분은 다루지 않겠다.)
+
+### 더 살펴보자...
+
+**아나콘다 가상환경**
+
+개발을 위한 파이썬 패키지 가상환경을 별도로 만들고 싶다면 conda에서 지원하는 명령어로 사용이 가능하다. 만약 아나콘다를 사용하지 않고 `pip`를 사용한다면 `virtualenv`로 가상환경을 관리 할 수 있다.
+~~~bash
+$ conda create -n [가상환경명] python=3.6    // 가상환경을 만든다. (n:name)
+$ conda env list                             // 설치된 가상환경 리스트 확인
+$ conda activate [가상환경명]                   // 가상환경 활성화 (or active [가상환경명])
+~~~
+>가상환경을 선택하여 활성화를 하게 되면 `(가상환경명) winuss@ubuntu:~$`와 같이 프롬프트 앞에 해당 가상환경명이 표시가 된다. 이후 패키지를 설치하게 되면 활성화된 가상환경에만 패키지가 설치가 된다.
+ 
+다시 가상환경을 비활성화하거나 삭제하려면,
+~~~bash
+$ (가상환경명) conda deactivate         // 가상환경 비활성화
+$ conda env remove -n [가상환경명]      // 가상환경 삭제
+~~~
+
+파이썬에서는 한 라이브러리에 대해 하나의 버전만 설치가 가능한데 이는 여러개의 프로젝트를 진행하게 되면 문제가 될 수 있다. 작업을 바꿀때마다 다른 버전의 라이브러리를 설치해야 해야 하는 번거러움을 방지하기 위해 독립된 가상환경이 필요한 것이다.
+
+**아나콘다에 패키지 설치**
+
+가상환경을 활성화 하지 않고 가상환경명을 지정하여 패키지를 설치 할 수도 있다. `mytest`라는 가상환경에 `tensorflow`를 설치 및 삭제를 해보자.
+
+~~~bash
+$ conda search tensorflow(패키지명)  // 패키지검색
+$ conda install tensorflow(패키지명) // 패키지 설치
+$ conda install --name mytest(가상환경명) tensorflow(패키지명) 
+$ conda list  // 패키지 리스트
+$ conda remove --name mytest(가상환경명) tensorflow(패키지명) // 패키지 제거
+~~~
+
+**주피터 설치**
+
+`mytest`라는 가상환경을 활성화 하고 jupyter를 설치해보자.
+
+~~~bash
+$ conda activate mytest             //가상환경 활성화
+$ (mytest) conda install jupyter    // 패키지 설치
+$ (mytest) conda install nb_conda   // 주피터 상에서 패키지 설치및 환경 정보를 쉽게 확인
+$ (mytest) jupyter notebook         // 주피터 실행
+~~~
+
+**주피터 확장기능 설치**
+
+주피터 확장기능을 사용하면 좀더 편리한 기능들을 사용할 수 있다.
+
+~~~bash
+$ conda install -c conda-forge jupyter_contrib_nbextensions
+~~~
+> 확장을 활성화 하려면 `Nbextensions 탭`을 클릭하거나 http://localhost:8888/nbextensions에서 확인 할 수 있다. 
+
+**주피터 font 수정**
+
+font가 가독성이 좀 떨어진다. custom.css를 추가하여 css를 적용할 수 있다.
+
+~~~bash
+$ mkdir ~/.jupyter/custom
+$ echo '/* jupyter css */' >> ~/.jupyter/custom/custom.css
+$ echo '.CodeMirror pre {font-family: Consolas; font-size: 10.5pt; line-height: 120%;}' >> ~/.jupyter/custom/custom.css
+$ echo '.container { width:100% !important; }' >> ~/.jupyter/custom/custom.css
+$ echo 'div.output pre{ font-family: Consolas; font-size: 10.5pt;}' >> ~/.jupyter/custom/custom.css
+~~~
+
+**주피터 상세 설정**
+
+기본 디렉토리, 토큰, 브라우저옵션 등 상세한 설정을 제어 하고 싶다면 config파일을 생성하여 해당 파일의 옵션값들을 수정해주면 된다.
+
+~~~bash
+$ jupyter notebook --generate-config
+~~~
+
+결과
+
+Writing default config to: /home/uss/.jupyter/jupyter_notebook_config.py
+
+
+### Matplotlib 설정
+
+~~~python
+%matplotlib inline
+~~~
+
+matplotlib 주요 설치 정보
+~~~python
+import matplotlib
+
+print ('버전: ', matplotlib.__version__)
+print ('설치위치: ', matplotlib.__file__)
+print ('설정: ', matplotlib.get_configdir())
+print ('캐시: ', matplotlib.get_cachedir())
+~~~
+
+우분투에 폰트는 `/usr/share/fonts/truetype/`에 있다.
+
+**글꼴 설치**
+
+~~~bash
+$ sudo apt-get install fonts-nanum*
+$ sudo fc-cache -fv
+~~~
+
+> `/usr/share/fonts/truetype/`에 nanum 폰트 파일이 설치가 된다.
+
+설치한 nanum폰트를 matplotlib에 복사하고 matplotlib의 폰트 캐시를 삭제하자.
+
+~~~bash
+$ sudo cp /usr/share/fonts/truetype/nanum/Nanum* [설치위치]/mpl-data/fonts/ttf/
+$ rm -rf /home/[user]/.cache/matplotlib/*
+~~~
+
+> 설치 위치는 **/usr/local/lib/python3.?/dist-packages/matplotlib**가 기본적이지만 matplotlib.__file__ 명령으로 설치위치를 확인하자.(가상환경의 경우 위치가 다를 수 있음)
+> 캐시 위치는 보통 사용자 디렉토리에 위치한다. `matplotlib.get_cachedir()`
+
+**폰트 지정**
+
+matplotlib.rcParams을 통해 matplotlib의 다양한 설정값을 읽거나 지정할 수 있다.
+
+~~~python
+import matplotlib.pyplot as plt
+
+plt.rcParams["font.family"] = 'NanumGothicCoding'
+plt.rcParams['font.size'] = 12.
+plt.rcParams['xtick.labelsize'] = 24.
+plt.rcParams['ytick.labelsize'] = 24.
+plt.rcParams['axes.labelsize'] = 20.
+
+plt.title('가격의 변화')
+plt.plot(range(50), data, 'r')
+plt.show()
+~~~
+
+[(f.name, f.fname) for f in matplotlib.font_manager.fontManager.ttflist if 'Nanum' in f.name] 으로 Nanum폰트명을 확인 할 수 있다.
+
+**폰트 설정파일**
+
+매번 폰트를 지정하는것이 번거롭다면 matplotlibrc 파일에 설정하면 된다.
+
+~~~python
+import matplotlib
+#설정파일명 확인
+matplotlib.matplotlib_fname()
+~~~
+
+~~~bash
+echo 'font.family : NanumGothic' >> ~/.config/matplotlib/matplotlibrc
+echo 'font.size : 10.0' >> ~/.config/matplotlib/matplotlibrc
+echo 'axes.unicode_minus : False' >> ~/.config/matplotlib/matplotlibrc
+~~~
+
+> 레이블에 '-'가 있는 경우 유니코드의 '-'문자를 그대로 출력하면 '-' 부호만 깨져 보인다. 이를 방지하기 위해 'axes.unicode_minus' 옵션을 False로 지정한다.
+
+이제 jupyter notebook를 재구동하고 그래프에 한글이 정상적으로 표시가 되는지 확인해보자.
+
+### 윈도우에서 아나콘다를 사용한다면..
+
+1. matplotlib 설정파일에 설정 추가 (matplotlib.matplotlib_fname())
+    - font.family : NanumGothic
+    - font.size : 10.0
+    - axes.unicode_minus : False
+2. .ttf 폰트를 matplotlib으로 복사한다.
+    - 아나콘다를 사용하는 경우 보통 아래 디렉토리이다.(NanumGothic 추천)
+    - C:\Users\(사용자명)\Anaconda3\Lib\site-packages\matplotlib\mpl-data\fonts\ttf
+3. matplotlib cache 폴더의 내용 삭제
+    - matplotlib.get_cachedir()
+4. 커널 재시작(주피터 노트북 재시작)
+
+**참고**
+- [Jupyter Notebook](https://jupyter.readthedocs.io/en/latest/)

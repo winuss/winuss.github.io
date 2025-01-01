@@ -1,0 +1,69 @@
+---
+title: ES6 - Function
+date: 2018-05-07
+desc: ES6 Tip
+thumbnail: /posts/javascript/ecma-script06-03/cover.png
+---
+
+### 이번은 함수에 대해 알아보자!
+
+~~~javascript
+//함수 선언식
+function add(x, y){
+  var sum = x+y;
+  return sum;
+}
+
+//함수 표현식
+var add = function(x, y){
+  var sum = x+y;
+  return sum;
+}
+~~~
+>1. 보통은 이 두가지를 사용한다.
+>2. 자가 호출 함수라는 것도 있다.
+
+### ECMA06에서의 함수 선언 방식
+~~~javascript
+var add = (x, y) => {
+  var sum = x+y;  
+  console.log(sum);
+}
+add(20, 1); // 21
+
+
+//더 간단한 방식
+const hi = x => "Hello " + x;
+console.log( hi('World!') ); //  Hello World!
+~~~
+>1. 보면 알겠지만 이젠 더이상 `function`, `return`을 안써도 된다. 
+>2. 괄호와 중괄호도 생략할 수 있다. 그냥  `=>` 끝.
+>3. 매개변수가 없으면 `( )` 괄호는 써줘야한다.
+
+
+그냥 다 `=>`로만 쓸까? 정답은 NO다.
+
+함수가 뭐하는 함수인지 모를 정도로 짧게 쓸 수 도 있으니 읽기 힘든 코드가 될 수 있다. 거기다가 요녀석이 `=>` 좀 보기 힘든 구석도 있다. 그래서 선언을 function으로 하는 추세도 있다. 
+
+`forEach`나 `map`같은 함수 내부에서 `function` 키워드 대신에 쓰는 것은 실제로 많이 권장하고 있다.
+
+~~~javascript
+var arr = [2, 3, 7, 8];
+
+//옛날 방식
+arr.forEach(function(el) {
+  console.log(el*2);
+});
+
+//ECMA06
+arr.forEach(el => {
+  console.log(el*2);
+});
+
+//평범한 함수 선언은 이런식으로 하는 것이 협업에 도움된다고 한다.(airbnb)
+const short = function longUniqueMoreDescriptiveLexicalFoo() {
+  // ...
+};
+~~~
+>그냥 function 대신에 `=>` 에로우를 쓰면된다.
+>매개변수는 먼저쓰고 없으면 `( )`써준다.

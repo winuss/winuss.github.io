@@ -1,0 +1,67 @@
+---
+title: ES6 - for-in for-of의 사용법과 차이점
+date: 2018-05-07
+desc: ES6 Tip
+thumbnail: /posts/javascript/ecma-script06-02/cover.png
+---
+
+### 진짜 짧게 반복문은 무엇?
+
+**기본적인 사용법**
+
+For문은 알고 있겠지만 반복적인 작업을 위해 쓰게된다. 이전 포스트에서 for문에서 `let`을 이용한다는 것을 알아 두자.
+
+~~~javascript
+let arr = [10, 11, 12];
+for (let i = 0; i < arr.length; i++) {
+  console.log("배열",i,": ", arr[i]);
+}
+// 배열 0 :  10
+// 배열 1 :  11
+// 배열 2 :  12
+~~~
+>1. for문은 i가 0부터 arr배열의 길이만큼 3번 반복한다.
+>2. arr배열의 0번에 접근하여 console.log로 출력한다.
+
+
+### 신상 반복문! in과 of
+
+**for-in loop**
+
+ES6에서는 2가지 반복문이 추가되었다. 먼저 볼것은 `for-in`이다.
+
+~~~javascript
+let objects = {a: 1, b: 2, c: 3};
+for (let key in objects) {
+  console.log(key, objects[key], key+1);
+}
+// a 1 'a1'
+// b 2 'b1'
+// c 3 'c1'
+~~~
+>1. for-in문은 오브젝트에 대해서 반복시킨다. 물론 오브젝트가 아닌 배열에도 사용 할 수 있다.
+>2. 가끔 JS엔진마다 순서가 바뀔 수 있어서 `배열에 쓰는 것은 권장하지 않는다.`
+>3. 받아오는 반복 변수 `key`값은 `String`이다. 그래서 연산작업을 해선 안된다.
+>`key+1`를 보면 이해할 수 있다. 그래서? 결론은 `배열 출입 금지`.
+
+**for-of loop**
+
+for-of에 들어 갈 수 있는 것은 String, Array, NodeList, TypedArray, Map, Set 등이다.
+
+~~~javascript
+let array = ["x", "y", "z"];
+for (let arr of array) {
+  console.log(arr);
+}
+// x
+// y
+// z
+~~~
+
+>1. 오브젝트는 안된다.
+>2. `arr`값은 for-in과 다르게 배열 속 값을 그대로 던저준다.
+>3. 특이한 점은 array 대신에 `String`이 들어갈 수 있다.
+
+사실은 위 예제말고도 상당히 다른 점이 많다.
+
+>`in은 Object. of는 Array`
