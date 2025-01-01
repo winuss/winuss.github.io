@@ -43,8 +43,8 @@ export default function RootLayout({
           <Footer />
         </ThemeProvider>
         <Toaster />
-        {process.env.NODE_ENV === 'production' && <Analytics />}
-        {process.env.NODE_ENV === 'production' && <SpeedInsights />}
+        {/* {process.env.NODE_ENV === 'production' && <Analytics />}
+        {process.env.NODE_ENV === 'production' && <SpeedInsights />} */}
         <GoogleAnalytics gaId='GTM-M5JW97ZQ' />
         <GoogleTagManager gtmId='GTM-M5JW97ZQ' />
       </body>
