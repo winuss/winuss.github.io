@@ -38,7 +38,7 @@ const CategoryList = ({
       <section className='mb-10 hidden sm:block'>
         <ul className='flex gap-3'>
           <CategoryButton
-            href='/blog'
+            href='/'
             isCurrent={currentCategory === 'all'}
             displayName='All'
             count={allPostCount}
