@@ -21,14 +21,32 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Next.js 13 이상을 위해 Node.js 18 이상 사용
+          node-version: '18'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8 # 사용하는 pnpm 버전
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: npm install # 또는 yarn install
+        run: pnpm install
 
       - name: Build Next.js app
         run: |
-          pnpm run build
+          pnpm build
           touch out/.nojekyll  # GitHub Pages가 _next 폴더를 무시하지 않도록 설정
         env:
           # 환경 변수가 필요한 경우 여기에 추가
