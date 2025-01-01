@@ -1,21 +1,43 @@
-name: Vercel Production Deployment
-env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+name: Deploy Next.js to GitHub Pages
+
 on:
   push:
     branches:
-      - main
+      - main # 메인 브랜치에 push할 때 실행
+
 jobs:
-  Deploy-Production:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-      - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Build Project Artifacts
-        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Checkout submodules # 서브모듈이 있는 경우
+        run: git submodule update --init --recursive --remote
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Next.js 13 이상을 위해 Node.js 18 이상 사용
+
+      - name: Install dependencies
+        run: npm install # 또는 yarn install
+
+      - name: Build Next.js app
+        run: |
+          pnpm run build
+          touch out/.nojekyll  # GitHub Pages가 _next 폴더를 무시하지 않도록 설정
+        env:
+          # 환경 변수가 필요한 경우 여기에 추가
+          NEXT_PUBLIC_BASE_PATH: '' # GitHub Pages base path 설정
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages # 배포할 브랜치
+          folder: out # Next.js 빌드 출력 폴더
+          token: ${{ secrets.ACCESS_TOKEN }}
+          clean: true # 배포 전 기존 파일 삭제
