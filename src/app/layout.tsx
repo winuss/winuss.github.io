@@ -7,8 +7,6 @@ import { Footer } from '@/layouts/Footer';
 import { Header } from '@/layouts/Header';
 import { ThemeProvider } from '@/layouts/theme/Provider';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseDomain),
@@ -35,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' className='h-full scroll-my-20 scroll-smooth' suppressHydrationWarning>
+    <html lang='ko' className='h-full scroll-smooth' suppressHydrationWarning>
       <body className='flex min-h-screen flex-col font-pretendard'>
         <ThemeProvider>
           <Header />
@@ -43,9 +41,7 @@ export default function RootLayout({
           <Footer />
         </ThemeProvider>
         <Toaster />
-        {/* {process.env.NODE_ENV === 'production' && <Analytics />}
-        {process.env.NODE_ENV === 'production' && <SpeedInsights />} */}
-        <GoogleAnalytics gaId='GTM-M5JW97ZQ' />
+        <GoogleAnalytics gaId='G-4GBTCVBGMX' />
         <GoogleTagManager gtmId='GTM-M5JW97ZQ' />
       </body>
     </html>
