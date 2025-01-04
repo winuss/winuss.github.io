@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 import { Toaster } from '@/components/ui/toaster';
 import { baseDomain, blogDesc, blogName, blogThumbnailURL } from '@/config/const';
@@ -12,11 +12,6 @@ export const metadata: Metadata = {
   metadataBase: new URL(baseDomain),
   title: blogName,
   description: blogDesc,
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    viewportFit: 'cover', // 노치 영역까지 컨텐츠 확장
-  },
   openGraph: {
     title: blogName,
     description: blogDesc,
@@ -32,6 +27,12 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -42,7 +43,7 @@ export default function RootLayout({
       <body className='flex min-h-screen flex-col font-pretendard'>
         <ThemeProvider>
           <Header />
-          <main className='mt-[calc(64px+env(safe-area-inset-top))]  flex flex-1 flex-col'>
+          <main className='mt-[calc(64px+env(safe-area-inset-top))] flex flex-1 flex-col'>
             {children}
           </main>
           <Footer />
