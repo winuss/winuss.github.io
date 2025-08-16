@@ -1,3 +1,3 @@
-# devtimes
+# devtimes blog
 
 Nextjs Blog

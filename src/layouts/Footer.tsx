@@ -23,7 +23,7 @@ export const Footer = () => {
         </Link>
       </div>
       <div>
-        © 2024. <span className='font-semibold'>Devtimes</span> all rights reserved.
+        © 2024. <span className='font-semibold'>Devtimes Blog</span> all rights reserved.
       </div>
     </footer>
   );

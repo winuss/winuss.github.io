@@ -124,7 +124,7 @@ self.addEventListener('notificationclick', (event) => {
     const openLink = event.notification.data.click_action;
     self.clients.openWindow(openLink);
   } catch {
-    self.clients.openWindow('https://devtimes.com');
+    self.clients.openWindow('https://blog.devtimes.com');
   }
 });
 ```

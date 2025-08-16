@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 import { Github } from 'lucide-react';
 
 const navList = [
-  { name: 'DEVTIMES', href: '/' },
+  { name: 'DEVTIMES BLOG', href: '/' },
   { name: 'About', href: '/about' },
 ];
 

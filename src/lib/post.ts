@@ -90,7 +90,7 @@ export const getSortedPostList = async (category?: string) => {
 
 export const getSitemapPostList = async () => {
   const postList = await getPostList();
-  const baseUrl = 'https://devtimes.com';
+  const baseUrl = 'https://blog.devtimes.com';
   const sitemapPostList = postList.map(({ url }) => ({
     lastModified: new Date(),
     url: `${baseUrl}${url}`,
