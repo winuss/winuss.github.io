@@ -58,7 +58,6 @@ export default function RootLayout({
           <Footer />
         </ThemeProvider>
         <Toaster />
-        <GoogleAnalytics gaId='G-4GBTCVBGMX' />
         <GoogleTagManager gtmId='GTM-M5JW97ZQ' />
       </body>
     </html>
