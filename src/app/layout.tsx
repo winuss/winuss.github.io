@@ -44,7 +44,7 @@ export default function RootLayout({
       <head>
         <Script
           id="adsbygoogle-init"
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1154659137489563"
           crossOrigin="anonymous"
         />
