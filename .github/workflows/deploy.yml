@@ -51,6 +51,9 @@ jobs:
         env:
           # 환경 변수가 필요한 경우 여기에 추가
           NEXT_PUBLIC_BASE_PATH: '' # GitHub Pages base path 설정
+          NEXT_PUBLIC_GISCUS_REPO_NAME: ${{ secrets.GISCUS_REPO_NAME }}
+          NEXT_PUBLIC_GISCUS_REPO_ID: ${{ secrets.GISCUS_REPO_ID }}
+          NEXT_PUBLIC_GISCUS_CATEGORY_ID: ${{ secrets.GISCUS_CATEGORY_ID }}
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
