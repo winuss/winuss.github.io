@@ -7,7 +7,7 @@ export const Footer = () => {
   return (
     <footer className='mb-16 mt-20 flex flex-col items-center justify-center gap-4 text-center print:hidden'>
       <div className='flex justify-center gap-4'>
-        <Link href='https://github.com/' target='_blank'>
+        <Link href='https://github.com/winuss' target='_blank'>
           <IconGithub
             className='fill-foreground transition hover:fill-pink-600'
             height={30}

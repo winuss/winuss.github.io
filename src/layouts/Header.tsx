@@ -60,7 +60,7 @@ export const Header = () => {
         <div className='flex gap-3'>
           <ThemeSwitch />
           <Button asChild variant='ghost' size='icon'>
-            <Link href='https://github.com/' target='_blank'>
+            <Link href='https://github.com/winuss' target='_blank'>
               <Github className='size-[1.2rem]' />
             </Link>
           </Button>
