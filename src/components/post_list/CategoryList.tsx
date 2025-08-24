@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { CategoryButton } from './CategoryButton';
 import {
@@ -24,12 +24,16 @@ const CategoryList = ({
   currentCategory = 'all',
 }: CategoryListProps) => {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const onCategoryChange = (value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete('page');
     if (value === 'all') {
-      router.push('/');
+      router.push(`/?${params.toString()}`);
     } else {
-      router.push(`/category/${value}`);
+      router.push(`/category/${value}?${params.toString()}`);
     }
   };
 

@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { Post } from '@/config/types';
 import matter from 'gray-matter';
-import { CalendarDays, Clock3 } from 'lucide-react';
+import { CalendarDays, Clock3, Tag } from 'lucide-react';
 
 interface Props {
   post: Post;
@@ -42,21 +42,34 @@ const PostCard = ({ post }: Props) => {
 
   return (
     <Link href={post.url} className='w-full'>
-      <li className='flex h-full w-full flex-col gap-3 overflow-hidden rounded-lg transition-colors hover:bg-gray-50 dark:hover:bg-slate-800'>
+      <li className='group flex h-full w-full flex-col overflow-hidden rounded-xl border bg-white shadow-sm transition hover:shadow-md dark:border-slate-800 dark:bg-slate-900'>
         <div className='flex w-full flex-1 flex-col justify-between p-5'>
           <div className='w-full'>
             <div className='flex w-full items-center justify-between gap-2'>
-              <h2 className='flex-1 text-lg font-semibold lg:text-2xl'>{post.title}</h2>
-              <span className='whitespace-nowrap text-sm font-medium text-pink-600'>
+              <h2 className='flex-1 text-lg font-semibold tracking-tight lg:text-2xl'>
+                {post.title}
+              </h2>
+              <span className='whitespace-nowrap rounded-md bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 dark:bg-pink-400/10 dark:text-pink-300'>
                 {post.categoryPublicName}
               </span>
             </div>
-            <div className='my-3 h-px w-full bg-gray-200 dark:bg-gray-700' />
+            <div className='my-3 h-px w-full bg-gray-100 dark:bg-gray-800' />
           </div>
 
           <div className='mb-4 w-full'>
-            <p className='line-clamp-4 text-gray-600 dark:text-gray-300'>{plainText}</p>
+            <p className='line-clamp-5 text-gray-600 dark:text-gray-300'>
+              {post.excerpt || post.desc || plainText}
+            </p>
           </div>
+
+          {post.tags?.length ? (
+            <div className='mb-3 flex flex-wrap items-center gap-2 text-xs text-gray-500'>
+              <Tag className='h-3.5 w-3.5' />
+              {post.tags.map((t) => (
+                <span key={t} className='rounded-full border px-2 py-0.5'>#{t}</span>
+              ))}
+            </div>
+          ) : null}
 
           <div className='flex w-full items-center justify-between text-sm text-gray-500 dark:text-gray-400'>
             <div className='flex items-center gap-2'>
@@ -69,7 +82,6 @@ const PostCard = ({ post }: Props) => {
             </div>
           </div>
         </div>
-        <div className='h-px w-full bg-gray-100 dark:bg-gray-800' />
       </li>
     </Link>
   );

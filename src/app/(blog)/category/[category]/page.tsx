@@ -6,10 +6,12 @@ import { getCategoryList, getCategoryPublicName } from '@/lib/post';
 
 type Props = {
   params: { category: string };
+  searchParams?: { page?: string; tag?: string; q?: string };
 };
 
 // 허용된 param 외 접근시 404
 export const dynamicParams = false;
+export const dynamic = 'force-static';
 
 export function generateStaticParams() {
   const categoryList = getCategoryList();
@@ -36,8 +38,11 @@ export async function generateMetadata({ params: { category } }: Props): Promise
   };
 }
 
-const CategoryPage = async ({ params }: Props) => {
-  return <PostListPage category={params.category} />;
+const CategoryPage = async ({ params, searchParams }: Props) => {
+  const page = Number(searchParams?.page || '1');
+  const tag = searchParams?.tag;
+  const q = searchParams?.q;
+  return <PostListPage category={params.category} page={page} tag={tag} q={q} />;
 };
 
 export default CategoryPage;

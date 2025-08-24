@@ -6,6 +6,13 @@ export interface PostMatter {
   dateString: string;
   thumbnail: string;
   desc: string;
+  tags?: string[];
+  series?: string;
+  seriesOrder?: number;
+  updated?: Date;
+  featured?: boolean;
+  pinned?: boolean;
+  draft?: boolean;
 }
 
 export interface Post extends PostMatter {
@@ -15,6 +22,7 @@ export interface Post extends PostMatter {
   content: string;
   readingMinutes: number;
   categoryPublicName: string;
+  excerpt?: string;
 }
 
 export interface CategoryDetail {
