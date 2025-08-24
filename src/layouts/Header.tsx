@@ -11,16 +11,17 @@ import { cn } from '@/lib/utils';
 import { Github } from 'lucide-react';
 
 const navList = [
-  { name: 'DEVTIMES BLOG', href: '/' },
+  { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
 ];
 
-const localePathList = ['/about'];
+const mainHome = {
+  name: 'DEVTIMES',
+  href: 'https://devtimes.com'
+}
 
 export const Header = () => {
   const { ref, marginTop } = useSpyElem(65);
-  const pathname = usePathname();
-  // const isLocalePath = localePathList.some((path) => pathname.startsWith(path));
 
   return (
     <nav
@@ -30,15 +31,25 @@ export const Header = () => {
     >
       <div className='mt-1 flex h-[64px] w-full max-w-[1200px] items-center justify-between px-4'>
         <div className='flex items-center font-medium'>
+            <Link
+              href={mainHome.href}
+              key={mainHome.name}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                'rounded-full px-4 py-1 text-center text-sm transition-colors hover:text-primary',
+                'bg-muted font-medium text-primary'
+              )}
+            >
+              {mainHome.name}
+            </Link>
           {navList.map((navItem) => (
             <Link
               href={navItem.href}
               key={navItem.name}
               className={cn(
                 'rounded-full px-4 py-1 text-center text-sm transition-colors hover:text-primary',
-                pathname?.startsWith(navItem.href)
-                  ? 'bg-muted font-medium text-primary'
-                  : 'text-muted-foreground'
+                'text-muted-foreground'
               )}
             >
               {navItem.name}
