@@ -1,8 +1,7 @@
 import CategoryList from './CategoryList';
-import PostCard from './PostCard';
-import { getAllPostCount, getCategoryDetailList, queryPosts } from '@/lib/post';
-import Pagination from './Pagination';
+import { getAllPostCount, getCategoryDetailList } from '@/lib/post';
 import TagFilter from './TagFilter';
+import PostListClient from './PostListClient';
 
 interface PostListProps {
   category?: string;
@@ -13,7 +12,6 @@ interface PostListProps {
 }
 
 const PostListPage = async ({ category, page = 1, pageSize = 12, tag, q }: PostListProps) => {
-  const { items: postList, total, totalPages } = await queryPosts({ category, page, pageSize, tag, q });
   const categoryList = await getCategoryDetailList();
   const allPostCount = await getAllPostCount();
 
@@ -41,12 +39,7 @@ const PostListPage = async ({ category, page = 1, pageSize = 12, tag, q }: PostL
           </button>
         </form>
         <TagFilter currentTag={tag} category={category} />
-        <ul className='grid grid-cols-1 gap-8'>
-          {postList.map((post) => (
-            <PostCard key={post.url + post.date} post={post} />
-          ))}
-        </ul>
-        <Pagination currentPage={page} totalPages={totalPages} />
+        <PostListClient category={category} />
       </section>
     </section>
   );
