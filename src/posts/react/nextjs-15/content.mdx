@@ -1,0 +1,71 @@
+---
+title: ⚡ Next.js 15 – 핵심 변경점 요약
+date: 2025-08-23
+desc: Next.js 15 Stable 요약
+thumbnail: /posts/fe/nextjs-14/cover.png
+---
+
+> 본 글은 Next.js 공식 블로그의 Next.js 15 발표 글을 바탕으로 주요 변경점을 간단 정리한 글입니다. 참고: [Next.js 15 블로그](https://nextjs.org/blog/next-15)
+
+## Next.js 15에서 달라진 점
+
+- **@next/codemod CLI**: 주요 버전 업그레이드를 자동화해 주는 개선된 코데모드 제공. `npx @next/codemod@canary upgrade latest`
+- **Async Request APIs(중요/Breaking)**: `cookies`, `headers`, `draftMode`, `params`, `searchParams` 등의 API가 비동기 방식으로 전환되었습니다.
+  ```ts
+  import { cookies } from 'next/headers'
+  export async function AdminPanel() {
+    const cookieStore = await cookies()
+    const token = cookieStore.get('token')
+    // ...
+  }
+  ```
+- **캐싱 기본값 변경(중요)**: `GET` Route Handlers와 Client Router Cache가 기본적으로 캐싱되지 않도록 변경. 필요 시 명시적으로 캐싱에 옵트인 해야 합니다.
+- **React 19 지원**: React 19, React Compiler(실험) 및 Hydration 오류 개선.
+- **Turbopack Dev(Stable)**: 개발 서버 성능/안정성 개선.
+- **Static Indicator**: 개발 중 정적 라우트를 시각적으로 표시.
+- **instrumentation.js(Stable)**: 서버 라이프사이클 관찰을 위한 API 안정화.
+- **Enhanced Forms(next/form)**: HTML Form에 클라이언트 내비게이션을 손쉽게 추가.
+- **next.config 타입 지원**: `next.config.ts` 정식 지원.
+- **셀프 호스팅 개선**: `Cache-Control` 헤더 제어 개선.
+- **Server Actions 보안 강화**: 예측 불가 엔드포인트와 미사용 액션 제거.
+- **External Bundling(Stable)**: App/Pages Router 모두에 대한 번들링 옵션 개선.
+- **ESLint 9 지원**, 개발/빌드 성능 향상 등.
+
+## 마이그레이션 팁
+
+- 비동기 Request API로 변경된 부분을 점검하세요. 임시로 동기 접근도 가능하지만 다음 메이저 전까지 경고가 출력됩니다. 자동 변환:
+  ```bash
+  npx @next/codemod@canary next-async-request-api .
+  ```
+- 캐싱 기본값 변화로 데이터 관련 성능 특성이 바뀔 수 있습니다. `force-static` 등 정적 옵션을 통해 필요 시 캐싱을 명시하세요.
+- `next.config.ts`를 사용한다면 타입 가이드를 받을 수 있습니다.
+
+## 예제 코드 스니펫
+
+### Async Request API 사용
+```ts
+import { headers } from 'next/headers'
+
+export async function Example() {
+  const h = await headers()
+  const ua = h.get('user-agent')
+  return <pre>{ua}</pre>
+}
+```
+
+### GET Route 캐싱 옵트인
+```ts
+export const dynamic = 'force-static'
+
+export async function GET() {
+  return new Response('cached')
+}
+```
+
+## 마치며
+
+Next.js 15는 대규모 애플리케이션의 렌더링/캐싱 모델을 단순화하는 방향으로 큰 변화를 시작했습니다. 특히 Request 기반 API의 비동기화와 캐싱 기본값 변경은 코드 구조와 데이터 전략에 직접적인 영향을 주므로, 업그레이드 시 이 부분을 우선적으로 점검하는 것을 권장합니다.
+
+참고: [Next.js 15 공식 블로그](https://nextjs.org/blog/next-15)
+
+
