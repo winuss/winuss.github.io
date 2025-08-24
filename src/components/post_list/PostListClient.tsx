@@ -98,8 +98,37 @@ export default function PostListClient({ category }: { category?: string }) {
   if (isLoading) return <div className='py-10 text-sm text-gray-500'>로딩 중…</div>;
   if (error) return <div className='py-10 text-sm text-red-500'>검색 인덱스를 불러오지 못했습니다: {error}</div>;
 
+  const hasFilters = Boolean(q || tag);
+  const clearFilters = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete('q');
+    params.delete('tag');
+    params.delete('page');
+    const qs = params.toString();
+    router.push(qs ? `${pathname}?${qs}` : pathname);
+  };
+
   return (
     <section>
+      <div className='mb-4 flex items-center justify-between'>
+        <div className='flex flex-wrap items-center gap-2 text-xs text-gray-500'>
+          {q ? (
+            <span className='rounded-full border px-2 py-1'>검색어: &quot;{q}&quot;</span>
+          ) : null}
+          {tag ? (
+            <span className='rounded-full border px-2 py-1'>태그: #{tag}</span>
+          ) : null}
+          <span className='rounded-full bg-gray-50 px-2 py-1 dark:bg-slate-800'>총 {total}건</span>
+        </div>
+        {hasFilters ? (
+          <button
+            onClick={clearFilters}
+            className='inline-flex items-center rounded-md border px-2 py-1 text-xs hover:bg-gray-50 dark:hover:bg-slate-800'
+          >
+            초기화
+          </button>
+        ) : null}
+      </div>
       <ul className='grid grid-cols-1 gap-8'>
         {items.map((p) => {
           const runtimePost: any = {
